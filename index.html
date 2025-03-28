@@ -5,230 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nico013 - Roblox Lua Scripter</title>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #0a0e17;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
-        }
+        /* [Previous CSS remains the same until .dot-network] */
 
-        /* Main content container */
-        .content {
-            position: relative;
-            z-index: 10;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header styles */
-        header {
-            text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: #7fdbff;
-            font-weight: 300;
-        }
-
-        /* Dot network styles - Modern Tech Version */
+        /* Dot network styles - Modern Web Version */
         .dot-network {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             pointer-events: none;
             overflow: hidden;
         }
         
         .dot {
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: rgba(80, 180, 255, 0.9);
+            width: 4px;
+            height: 4px;
+            background-color: rgba(100, 200, 255, 0.8);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px 3px rgba(80, 180, 255, 0.5);
-            transition: all 0.3s ease-out;
-            z-index: 1;
-        }
-        
-        .dot.core {
-            width: 8px;
-            height: 8px;
-            background-color: rgba(100, 220, 255, 1);
-            box-shadow: 0 0 20px 5px rgba(100, 220, 255, 0.7);
-            animation: pulse 2s infinite alternate;
+            box-shadow: 0 0 10px 2px rgba(100, 200, 255, 0.3);
+            transition: transform 0.2s ease-out;
         }
         
         .connection-line {
             position: absolute;
             height: 1px;
-            background: linear-gradient(90deg, rgba(80, 180, 255, 0.8), transparent);
+            background: linear-gradient(90deg, rgba(100, 200, 255, 0.3), transparent);
             transform-origin: left center;
-            z-index: 0;
-            transition: all 0.4s ease;
-            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
         }
 
         .connection-line.active {
-            opacity: 0.6;
-            background: linear-gradient(90deg, rgba(100, 220, 255, 0.9), transparent);
-        }
-
-        .connection-line.strong {
-            height: 2px;
-            opacity: 0.8;
-            background: linear-gradient(90deg, rgba(120, 240, 255, 1), transparent);
+            background: linear-gradient(90deg, rgba(100, 200, 255, 0.6), transparent);
         }
 
         .glow-effect {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(80, 180, 255, 0.15) 0%, rgba(80, 180, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(100, 200, 255, 0.1) 0%, rgba(100, 200, 255, 0) 70%);
             transform: translate(-50%, -50%);
             pointer-events: none;
             opacity: 0;
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 20px 5px rgba(100, 220, 255, 0.7);
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.2);
-                box-shadow: 0 0 30px 8px rgba(100, 220, 255, 0.9);
-            }
-        }
-
-        @keyframes connectionPulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.3; }
-        }
-
-        /* Content sections */
-        section {
-            background-color: rgba(10, 20, 35, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(80, 180, 255, 0.2);
-        }
-
-        h3 {
-            color: #4facfe;
-            margin-top: 0;
-            font-size: 1.8rem;
-        }
-
-        /* Project cards */
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: rgba(15, 30, 50, 0.6);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(80, 180, 255, 0.1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: rgba(80, 180, 255, 0.3);
-        }
-
-        .project-card h4 {
-            color: #7fdbff;
-            margin-top: 0;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
 <body>
-    <div class="dot-network" id="dotNetwork"></div>
-    
-    <div class="content">
-        <header>
-            <h1>Nico013</h1>
-            <h2>Roblox Lua Scripter & Game Developer</h2>
-        </header>
-
-        <section id="about">
-            <h3>About Me</h3>
-            <p>I'm a passionate Roblox developer specializing in Lua scripting, game mechanics, and system design. With 5 years of experience, I've created numerous successful games and systems that engage players with innovative gameplay.</p>
-        </section>
-
-        <section id="skills">
-            <h3>Skills</h3>
-            <ul>
-                <li>Advanced Lua scripting</li>
-                <li>Game system design</li>
-                <li>UI/UX development</li>
-                <li>Backend systems</li>
-                <li>Performance optimization</li>
-            </ul>
-        </section>
-
-        <section id="projects">
-            <h3>Featured Projects</h3>
-            <div class="projects">
-                <div class="project-card">
-                    <h4>Adventure World</h4>
-                    <p>A massive open-world RPG with quests, skills, and a dynamic economy system.</p>
-                </div>
-                <div class="project-card">
-                    <h4>Tycoon Master</h4>
-                    <p>Innovative tycoon game with modular building and automated production chains.</p>
-                </div>
-                <div class="project-card">
-                    <h4>Battle System Framework</h4>
-                    <p>Modular combat system used by multiple popular Roblox games.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>Contact me at: nico013@example.com</p>
-            <p>© 2023 Nico013 - All rights reserved</p>
-        </footer>
-    </div>
+    <!-- [Previous HTML remains the same] -->
     
     <script>
-        // Modern Tech Dot Network
+        // [Previous JavaScript remains the same until initDotNetwork]
+
+        // Modern Web-like Dot Network
         const initDotNetwork = () => {
             const container = document.getElementById('dotNetwork');
             if (!container) return;
@@ -236,87 +70,51 @@
             // Clear previous content
             container.innerHTML = '';
 
-            const dotCount = 60;
-            const coreDotCount = 5;
+            const dotCount = 80;
             const dots = [];
             const connectionLines = [];
             const glowEffects = [];
-            const maxConnections = 4;
-            const connectionDistance = 20; // Percentage of viewport
-            const strongConnectionDistance = 10; // Percentage of viewport for strong connections
+            const maxConnections = 3; // Max connections per dot
+            const connectionDistance = 15; // Percentage of viewport
 
             // Create glow effects
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 5; i++) {
                 const glow = document.createElement('div');
                 glow.className = 'glow-effect';
-                glow.style.width = `${Math.random() * 300 + 200}px`;
+                glow.style.width = `${Math.random() * 200 + 100}px`;
                 glow.style.height = glow.style.width;
                 container.appendChild(glow);
-                glowEffects.push({
-                    element: glow,
-                    x: Math.random() * 100,
-                    y: Math.random() * 100,
-                    speedX: (Math.random() - 0.5) * 0.02,
-                    speedY: (Math.random() - 0.5) * 0.02
-                });
+                glowEffects.push(glow);
             }
 
-            // Create core dots (larger, more central)
-            for (let i = 0; i < coreDotCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot core';
-                
-                // Position core dots more towards center
-                const x = 30 + Math.random() * 40;
-                const y = 30 + Math.random() * 40;
-                
-                dot.style.left = `${x}%`;
-                dot.style.top = `${y}%`;
-                
-                // Slower movement for core dots
-                const speedX = (Math.random() - 0.5) * 0.02;
-                const speedY = (Math.random() - 0.5) * 0.02;
-                
-                dots.push({
-                    element: dot,
-                    x, y,
-                    speedX, speedY,
-                    connections: 0,
-                    isCore: true
-                });
-                
-                container.appendChild(dot);
-            }
-
-            // Create regular dots
-            for (let i = 0; i < dotCount - coreDotCount; i++) {
+            // Create dots
+            for (let i = 0; i < dotCount; i++) {
                 const dot = document.createElement('div');
                 dot.className = 'dot';
                 
                 // Random position within viewport (with padding)
-                const x = 5 + Math.random() * 90;
-                const y = 5 + Math.random() * 90;
+                const x = 10 + Math.random() * 80;
+                const y = 10 + Math.random() * 80;
                 
                 dot.style.left = `${x}%`;
                 dot.style.top = `${y}%`;
                 
                 // Random movement direction and speed
-                const speedX = (Math.random() - 0.5) * 0.05;
-                const speedY = (Math.random() - 0.5) * 0.05;
+                const speedX = (Math.random() - 0.5) * 0.03;
+                const speedY = (Math.random() - 0.5) * 0.03;
                 
                 dots.push({
                     element: dot,
                     x, y,
                     speedX, speedY,
-                    connections: 0,
-                    isCore: false
+                    connections: 0
                 });
                 
                 container.appendChild(dot);
             }
 
-            // Create connection lines (more than needed to be safe)
-            for (let i = 0; i < dotCount * maxConnections * 1.5; i++) {
+            // Create connection lines
+            for (let i = 0; i < dotCount * maxConnections; i++) {
                 const line = document.createElement('div');
                 line.className = 'connection-line';
                 container.appendChild(line);
@@ -326,23 +124,14 @@
             // Animation loop
             const animateDots = () => {
                 // Update glow effects
-                glowEffects.forEach(glow => {
-                    glow.x += glow.speedX;
-                    glow.y += glow.speedY;
-                    
-                    // Bounce off edges
-                    if (glow.x < 0 || glow.x > 100) glow.speedX *= -1;
-                    if (glow.y < 0 || glow.y > 100) glow.speedY *= -1;
-                    
-                    glow.element.style.left = `${glow.x}%`;
-                    glow.element.style.top = `${glow.y}%`;
-                    
-                    // Randomly change opacity
-                    if (Math.random() > 0.98) {
-                        glow.element.style.opacity = '0.2';
+                glowEffects.forEach((glow, index) => {
+                    if (Math.random() > 0.95) {
+                        glow.style.left = `${Math.random() * 100}%`;
+                        glow.style.top = `${Math.random() * 100}%`;
+                        glow.style.opacity = '0.3';
                         setTimeout(() => {
-                            glow.element.style.opacity = '0';
-                        }, 1500);
+                            glow.style.opacity = '0';
+                        }, 1000);
                     }
                 });
 
@@ -355,33 +144,11 @@
                     dot.y += dot.speedY;
                     
                     // Bounce off edges with slight randomness
-                    if (dot.x < 2 || dot.x > 98) {
-                        dot.speedX *= -1 * (0.8 + Math.random() * 0.4);
+                    if (dot.x < 5 || dot.x > 95) {
+                        dot.speedX *= -1 * (0.9 + Math.random() * 0.2);
                     }
-                    if (dot.y < 2 || dot.y > 98) {
-                        dot.speedY *= -1 * (0.8 + Math.random() * 0.4);
-                    }
-                    
-                    // Core dots move more slowly and stay more centered
-                    if (dot.isCore) {
-                        // Gentle pull towards center
-                        const centerX = 50, centerY = 50;
-                        const dx = centerX - dot.x;
-                        const dy = centerY - dot.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance > 30) {
-                            dot.speedX += dx * 0.0002;
-                            dot.speedY += dy * 0.0002;
-                        }
-                        
-                        // Limit speed for core dots
-                        const speed = Math.sqrt(dot.speedX * dot.speedX + dot.speedY * dot.speedY);
-                        const maxSpeed = 0.03;
-                        if (speed > maxSpeed) {
-                            dot.speedX = (dot.speedX / speed) * maxSpeed;
-                            dot.speedY = (dot.speedY / speed) * maxSpeed;
-                        }
+                    if (dot.y < 5 || dot.y > 95) {
+                        dot.speedY *= -1 * (0.9 + Math.random() * 0.2);
                     }
                     
                     dot.element.style.left = `${dot.x}%`;
@@ -395,7 +162,9 @@
                     
                     // Find nearest dots
                     const nearbyDots = [];
-                    for (let j = i + 1; j < dots.length; j++) {
+                    for (let j = 0; j < dots.length; j++) {
+                        if (i === j) continue;
+                        
                         const dot2 = dots[j];
                         const dx = dot1.x - dot2.x;
                         const dy = dot1.y - dot2.y;
@@ -416,30 +185,25 @@
                         if (lineIndex >= connectionLines.length) break;
                         
                         const line = connectionLines[lineIndex];
-                        const dx = dot2.x - dot1.x;
-                        const dy = dot2.y - dot1.y;
+                        const dx = dot1.x - dot2.x;
+                        const dy = dot1.y - dot2.y;
                         const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                        const length = distance * Math.max(window.innerWidth, window.innerHeight) / 100;
+                        const length = distance * window.innerWidth / 100;
                         
                         line.style.width = `${length}px`;
                         line.style.left = `${dot1.x}%`;
                         line.style.top = `${dot1.y}%`;
                         line.style.transform = `rotate(${angle}deg)`;
                         
-                        // Dynamic styling based on distance
-                        if (distance < strongConnectionDistance) {
-                            line.className = 'connection-line strong';
-                            line.style.opacity = '0.8';
-                            
-                            // Add pulsing animation to strong connections
-                            if (Math.random() > 0.7) {
-                                line.style.animation = 'connectionPulse 2s infinite';
-                            }
+                        // Dynamic opacity based on distance
+                        const opacity = 0.6 * (1 - distance / connectionDistance);
+                        line.style.opacity = opacity;
+                        
+                        // Highlight active connections
+                        if (distance < connectionDistance * 0.7) {
+                            line.classList.add('active');
                         } else {
-                            line.className = 'connection-line active';
-                            const opacity = 0.6 * (1 - distance / connectionDistance);
-                            line.style.opacity = opacity;
-                            line.style.animation = '';
+                            line.classList.remove('active');
                         }
                         
                         dot1.connections++;
@@ -451,7 +215,6 @@
                 // Hide unused lines
                 for (let i = lineIndex; i < connectionLines.length; i++) {
                     connectionLines[i].style.opacity = '0';
-                    connectionLines[i].style.animation = '';
                 }
 
                 requestAnimationFrame(animateDots);
@@ -459,15 +222,19 @@
 
             // Handle window resize
             const handleResize = () => {
-                // No need to do anything special - percentages will handle it
+                // Recalculate positions if needed
             };
 
             window.addEventListener('resize', handleResize);
             animateDots();
         };
 
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initDotNetwork);
+        // [Rest of the JavaScript remains the same]
     </script>
 </body>
 </html>
+
+
+
+
+Right now the background is just flying dots. i want them to connect with each other like a small net dynamcly and look modern and techy. Do it
