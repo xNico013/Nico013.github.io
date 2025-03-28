@@ -570,45 +570,6 @@
                         const targetSize = 4;
                         const scale = targetSize / size;
                         head.scale.set(scale, scale, scale);
-
-                        // Material fixes
-                        head.traverse((child) => {
-                            if (child.isMesh) {
-                                // For opaque parts (like the head)
-                                if (!child.material.name.includes('Glass') && 
-                                    !child.material.name.includes('Crown')) {
-                                    child.material.transparent = false;
-                                    child.material.opacity = 1;
-                                    child.material.side = THREE.FrontSide;
-                                }
-                                // For transparent accessories (like crown)
-                                else {
-                                    // Force proper rendering of transparent objects
-                                    child.material.transparent = true;
-                                    child.material.opacity = 1;
-                                    child.material.side = THREE.DoubleSide;
-                                    child.material.depthWrite = false;
-                                    child.material.alphaTest = 0.1;
-                                    
-                                    // Optional: Add slight refraction for glass-like materials
-                                    if (child.material.name.includes('Glass')) {
-                                        child.material = new THREE.MeshPhysicalMaterial({
-                                            color: child.material.color,
-                                            transmission: 0.5,
-                                            roughness: 0.1,
-                                            metalness: 0,
-                                            clearcoat: 1,
-                                            clearcoatRoughness: 0.1,
-                                            side: THREE.DoubleSide,
-                                            transparent: true
-                                        });
-                                    }
-                                }
-                                
-                                // Fix render order for all materials
-                                child.renderOrder = child.material.transparent ? 1 : 0;
-                            }
-                        });
                         
                         scene.add(head);
                         animate();
