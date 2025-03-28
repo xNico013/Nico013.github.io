@@ -275,7 +275,7 @@
             }
         }
 
-        /* Dot network styles */
+        /* Modern Web Dot Network Styles */
         .dot-network {
             position: fixed;
             top: 0;
@@ -284,22 +284,43 @@
             height: 100%;
             z-index: -2;
             pointer-events: none;
+            overflow: hidden;
         }
         
         .dot {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background-color: rgba(255, 255, 255, 0.3);
+            width: 4px;
+            height: 4px;
+            background-color: rgba(100, 200, 255, 0.8);
             border-radius: 50%;
             transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px 2px rgba(100, 200, 255, 0.3);
+            transition: transform 0.2s ease-out;
         }
         
-        .line {
+        .connection-line {
             position: absolute;
             height: 1px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(90deg, rgba(100, 200, 255, 0.3), transparent);
             transform-origin: left center;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .connection-line.active {
+            background: linear-gradient(90deg, rgba(100, 200, 255, 0.6), transparent);
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(100, 200, 255, 0.1) 0%, rgba(100, 200, 255, 0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
@@ -460,99 +481,170 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script>
-        // Initialize dot network
+        // Modern Web-like Dot Network
         const initDotNetwork = () => {
             const container = document.getElementById('dotNetwork');
             if (!container) return;
 
-            const dotCount = 100;
+            // Clear previous content
+            container.innerHTML = '';
+
+            const dotCount = 80;
             const dots = [];
-            const lines = [];
-            const connections = [];
+            const connectionLines = [];
+            const glowEffects = [];
+            const maxConnections = 3; // Max connections per dot
+            const connectionDistance = 15; // Percentage of viewport
+
+            // Create glow effects
+            for (let i = 0; i < 5; i++) {
+                const glow = document.createElement('div');
+                glow.className = 'glow-effect';
+                glow.style.width = `${Math.random() * 200 + 100}px`;
+                glow.style.height = glow.style.width;
+                container.appendChild(glow);
+                glowEffects.push(glow);
+            }
 
             // Create dots
             for (let i = 0; i < dotCount; i++) {
                 const dot = document.createElement('div');
                 dot.className = 'dot';
                 
-                // Random position within viewport
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
+                // Random position within viewport (with padding)
+                const x = 10 + Math.random() * 80;
+                const y = 10 + Math.random() * 80;
                 
                 dot.style.left = `${x}%`;
                 dot.style.top = `${y}%`;
                 
                 // Random movement direction and speed
-                const speedX = (Math.random() - 0.5) * 0.05;
-                const speedY = (Math.random() - 0.5) * 0.05;
+                const speedX = (Math.random() - 0.5) * 0.03;
+                const speedY = (Math.random() - 0.5) * 0.03;
                 
                 dots.push({
                     element: dot,
                     x, y,
-                    speedX, speedY
+                    speedX, speedY,
+                    connections: 0
                 });
                 
                 container.appendChild(dot);
             }
 
+            // Create connection lines
+            for (let i = 0; i < dotCount * maxConnections; i++) {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                container.appendChild(line);
+                connectionLines.push(line);
+            }
+
             // Animation loop
             const animateDots = () => {
-                // Clear previous connections
-                lines.forEach(line => container.removeChild(line));
-                lines.length = 0;
-                connections.length = 0;
+                // Update glow effects
+                glowEffects.forEach((glow, index) => {
+                    if (Math.random() > 0.95) {
+                        glow.style.left = `${Math.random() * 100}%`;
+                        glow.style.top = `${Math.random() * 100}%`;
+                        glow.style.opacity = '0.3';
+                        setTimeout(() => {
+                            glow.style.opacity = '0';
+                        }, 1000);
+                    }
+                });
+
+                // Reset connection counts
+                dots.forEach(dot => dot.connections = 0);
 
                 // Update dot positions
                 dots.forEach(dot => {
                     dot.x += dot.speedX;
                     dot.y += dot.speedY;
                     
-                    // Bounce off edges
-                    if (dot.x < 0 || dot.x > 100) dot.speedX *= -1;
-                    if (dot.y < 0 || dot.y > 100) dot.speedY *= -1;
+                    // Bounce off edges with slight randomness
+                    if (dot.x < 5 || dot.x > 95) {
+                        dot.speedX *= -1 * (0.9 + Math.random() * 0.2);
+                    }
+                    if (dot.y < 5 || dot.y > 95) {
+                        dot.speedY *= -1 * (0.9 + Math.random() * 0.2);
+                    }
                     
                     dot.element.style.left = `${dot.x}%`;
                     dot.element.style.top = `${dot.y}%`;
                 });
 
                 // Create connections between nearby dots
+                let lineIndex = 0;
                 for (let i = 0; i < dots.length; i++) {
-                    for (let j = i + 1; j < dots.length; j++) {
-                        const dot1 = dots[i];
-                        const dot2 = dots[j];
+                    const dot1 = dots[i];
+                    
+                    // Find nearest dots
+                    const nearbyDots = [];
+                    for (let j = 0; j < dots.length; j++) {
+                        if (i === j) continue;
                         
-                        // Calculate distance
+                        const dot2 = dots[j];
                         const dx = dot1.x - dot2.x;
                         const dy = dot1.y - dot2.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         
-                        // Connect dots within a certain distance
-                        if (distance < 15) {
-                            const line = document.createElement('div');
-                            line.className = 'line';
-                            
-                            // Calculate line position and length
-                            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                            const length = distance * window.innerWidth / 100;
-                            
-                            line.style.width = `${length}px`;
-                            line.style.left = `${dot1.x}%`;
-                            line.style.top = `${dot1.y}%`;
-                            line.style.transform = `rotate(${angle}deg)`;
-                            
-                            // Fade effect based on distance
-                            const opacity = 0.3 * (1 - distance / 15);
-                            line.style.opacity = opacity;
-                            
-                            lines.push(line);
-                            container.appendChild(line);
+                        if (distance < connectionDistance) {
+                            nearbyDots.push({ dot: dot2, distance });
                         }
                     }
+                    
+                    // Sort by distance and connect to closest dots first
+                    nearbyDots.sort((a, b) => a.distance - b.distance);
+                    
+                    for (let k = 0; k < nearbyDots.length && dot1.connections < maxConnections && nearbyDots[k].dot.connections < maxConnections; k++) {
+                        const dot2 = nearbyDots[k].dot;
+                        const distance = nearbyDots[k].distance;
+                        
+                        if (lineIndex >= connectionLines.length) break;
+                        
+                        const line = connectionLines[lineIndex];
+                        const dx = dot1.x - dot2.x;
+                        const dy = dot1.y - dot2.y;
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        const length = distance * window.innerWidth / 100;
+                        
+                        line.style.width = `${length}px`;
+                        line.style.left = `${dot1.x}%`;
+                        line.style.top = `${dot1.y}%`;
+                        line.style.transform = `rotate(${angle}deg)`;
+                        
+                        // Dynamic opacity based on distance
+                        const opacity = 0.6 * (1 - distance / connectionDistance);
+                        line.style.opacity = opacity;
+                        
+                        // Highlight active connections
+                        if (distance < connectionDistance * 0.7) {
+                            line.classList.add('active');
+                        } else {
+                            line.classList.remove('active');
+                        }
+                        
+                        dot1.connections++;
+                        dot2.connections++;
+                        lineIndex++;
+                    }
+                }
+                
+                // Hide unused lines
+                for (let i = lineIndex; i < connectionLines.length; i++) {
+                    connectionLines[i].style.opacity = '0';
                 }
 
                 requestAnimationFrame(animateDots);
             };
 
+            // Handle window resize
+            const handleResize = () => {
+                // Recalculate positions if needed
+            };
+
+            window.addEventListener('resize', handleResize);
             animateDots();
         };
 
