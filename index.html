@@ -570,6 +570,15 @@
                         const targetSize = 4;
                         const scale = targetSize / size;
                         head.scale.set(scale, scale, scale);
+
+                        // Force all materials to be fully opaque
+                        head.traverse((child) => {
+                            if (child.isMesh) {
+                                child.material.transparent = false; // Disable transparency
+                                child.material.opacity = 1; // Force full opacity
+                                child.material.alphaTest = 0.5; // Helps with edge artifacts
+                            }
+                        });
                         
                         scene.add(head);
                         
@@ -584,8 +593,6 @@
                         const material = new THREE.MeshBasicMaterial({ 
                             color: 0x00ff00,
                             wireframe: true,
-                            transparent: true,
-                            opacity: 0.5
                         });
                         head = new THREE.Mesh(geometry, material);
                         scene.add(head);
