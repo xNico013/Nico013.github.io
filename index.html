@@ -35,7 +35,7 @@
             background-color: var(--primary);
         }
         
-        .earth-container {
+        .head-container {
             position: fixed;
             top: 50%;
             right: 10%;
@@ -43,8 +43,7 @@
             width: 300px;
             height: 300px;
             z-index: -1;
-            opacity: 0.3;
-            overflow: visible;
+            opacity: 0.2;
         }
         
         .container {
@@ -267,7 +266,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .earth-container {
+            .head-container {
                 display: none;
             }
             
@@ -280,7 +279,7 @@
 <body>
     <!-- Dynamic Background Elements -->
     <div id="particles-js"></div>
-    <div class="earth-container" id="earth"></div>
+    <div class="head-container" id="headModel"></div>
     
     <div class="container">
         <header>
@@ -433,10 +432,93 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script>
-        // Optimized particles.js configuration
+        // Fixed particles.js configuration with small dots
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS("particles-js", {
-                /* [Keep the same particles.js config as before] */
+                "particles": {
+                    "number": {
+                        "value": 100,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 2,  // Small dot size
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#555555",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
             });
 
             // Load and display 3D head model
@@ -450,48 +532,52 @@
                 // Scene setup
                 const scene = new THREE.Scene();
                 
-                // Lighting setup
+                // Improved lighting
                 const ambientLight = new THREE.AmbientLight(0x404040, 2);
                 scene.add(ambientLight);
                 
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-                directionalLight.position.set(1, 1, 1);
+                directionalLight.position.set(1, 1, 1).normalize();
                 scene.add(directionalLight);
 
                 const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
                 camera.position.z = 5;
 
-                // Renderer with optimizations
+                // Optimized renderer
                 const renderer = new THREE.WebGLRenderer({
                     alpha: true,
                     antialias: true,
                     powerPreference: "low-power"
                 });
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 renderer.setSize(width, height);
                 renderer.outputEncoding = THREE.sRGBEncoding;
                 container.innerHTML = '';
                 container.appendChild(renderer.domElement);
 
-                // Load your actual head model
+                // Load head model
                 const loader = new THREE.GLTFLoader();
                 let head;
                 
                 loader.load(
-                    'Head.glb', // Make sure this matches your filename exactly
+                    'Head.glb',
                     (gltf) => {
                         head = gltf.scene;
                         
-                        // Adjust model scale and position
-                        head.scale.set(1.5, 1.5, 1.5);
-                        head.position.y = -0.5;
+                        // Center and scale the model
+                        const box = new THREE.Box3().setFromObject(head);
+                        const center = box.getCenter(new THREE.Vector3());
+                        head.position.sub(center);
                         
-                        // Apply material properties for transparency
+                        const size = box.getSize(new THREE.Vector3()).length();
+                        const targetSize = 2.5;
+                        head.scale.setScalar(targetSize / size);
+                        
+                        // Apply material properties
                         head.traverse((child) => {
                             if (child.isMesh) {
                                 child.material.transparent = true;
                                 child.material.opacity = 0.7;
-                                child.material.envMapIntensity = 0.5;
                             }
                         });
                         
@@ -500,7 +586,7 @@
                     undefined,
                     (error) => {
                         console.error('Error loading model:', error);
-                        // Fallback to simple sphere if model fails to load
+                        // Fallback sphere
                         const geometry = new THREE.SphereGeometry(1, 32, 32);
                         const material = new THREE.MeshPhongMaterial({
                             color: 0xaaaaaa,
@@ -513,27 +599,23 @@
                     }
                 );
 
-                // Animation variables
+                // Smooth animation
                 let lastTime = 0;
-                const targetRotationSpeed = 0.2;
-                let currentRotationSpeed = 0;
-                
-                // Animation loop
                 const animate = (time) => {
+                    requestAnimationFrame(animate);
+                    
                     if (!lastTime) lastTime = time;
                     const delta = (time - lastTime) / 1000;
                     lastTime = time;
                     
-                    currentRotationSpeed += (targetRotationSpeed - currentRotationSpeed) * 0.05;
-                    if (head) head.rotation.y += currentRotationSpeed * delta;
+                    if (head) head.rotation.y += 0.2 * delta;
                     
                     renderer.render(scene, camera);
-                    requestAnimationFrame(animate);
                 };
 
-                requestAnimationFrame(animate);
+                animate();
 
-                // Handle window resize
+                // Handle resize
                 const handleResize = () => {
                     const width = container.offsetWidth;
                     const height = container.offsetHeight;
@@ -544,12 +626,14 @@
 
                 window.addEventListener('resize', handleResize);
 
+                // Cleanup
                 return () => {
                     window.removeEventListener('resize', handleResize);
-                    renderer.dispose();
+                    if (renderer) renderer.dispose();
                 };
             };
 
+            // Initialize with small delay
             setTimeout(initHeadModel, 500);
         });
     </script>
