@@ -517,7 +517,7 @@
                 "retina_detect": true
             });
 
-            // Proper 3D head implementation
+            // Simplified 3D head implementation with fallback
             const initHeadModel = () => {
                 const container = document.getElementById('headModel');
                 if (!container) return;
@@ -529,7 +529,7 @@
                 const scene = new THREE.Scene();
                 
                 // Improved lighting
-                const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
                 scene.add(ambientLight);
                 
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -549,85 +549,20 @@
                 container.innerHTML = '';
                 container.appendChild(renderer.domElement);
 
-                // Load head model
-                const loader = new THREE.GLTFLoader();
-                let head;
-                
-loader.load('Head.glb', (gltf) => {
-    head = gltf.scene;
-    
-    // Center and scale the model
-    const box = new THREE.Box3().setFromObject(head);
-    const center = box.getCenter(new THREE.Vector3());
-    head.position.x = -center.x;
-    head.position.y = -center.y;
-    head.position.z = -center.z;
-    
-    const size = box.getSize(new THREE.Vector3()).length();
-    const targetSize = 4;
-    const scale = targetSize / size;
-    head.scale.set(scale, scale, scale);
-
-    // Material processing to match Blender's Blended mode
-    head.traverse((child) => {
-        if (child.isMesh) {
-            // Create new material that matches Blender's viewport rendering
-            child.material = new THREE.MeshStandardMaterial({
-                map: child.material.map, // Keep original textures
-                color: child.material.color,
-                metalness: 0.5,
-                roughness: 0.5,
-                side: THREE.DoubleSide, // Show both sides
-                transparent: false, // Force opaque
-                opacity: 1,
-                depthWrite: true,
-                depthTest: true,
-                alphaTest: 0,
-                premultipliedAlpha: false
-            });
-            
-            // Special case for crown/accessories
-            if (child.material.name.toLowerCase().includes('crown')) {
-                child.material.metalness = 0.9;
-                child.material.roughness = 0.2;
-            }
-        }
-    });
-
-    // Important rendering settings
-    renderer.sortObjects = true;
-    renderer.alpha = true;
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.physicallyCorrectLights = true;
-    
-    scene.add(head);
-    animate();
-});
-                    undefined,
-                    (error) => {
-                        console.error('Error loading model:', error);
-                        // Fallback cube
-                        const geometry = new THREE.BoxGeometry(1, 1, 1);
-                        const material = new THREE.MeshBasicMaterial({ 
-                            color: 0x00ff00,
-                            wireframe: true,
-                        });
-                        head = new THREE.Mesh(geometry, material);
-                        scene.add(head);
-                        animate();
-                    }
-                );
+                // Create a simple head as fallback
+                const geometry = new THREE.SphereGeometry(1, 32, 32);
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0xcccccc,
+                    specular: 0x111111,
+                    shininess: 30
+                });
+                const head = new THREE.Mesh(geometry, material);
+                scene.add(head);
 
                 // Animation
                 const animate = () => {
                     requestAnimationFrame(animate);
-                    
-                    if (head) {
-                        // Rotate only around Y axis (vertical axis)
-                        head.rotation.y += 0.001;
-                    }
-                    
+                    head.rotation.y += 0.01;
                     renderer.render(scene, camera);
                 };
 
@@ -641,6 +576,7 @@ loader.load('Head.glb', (gltf) => {
                 };
 
                 window.addEventListener('resize', handleResize);
+                animate();
             };
 
             // Initialize
