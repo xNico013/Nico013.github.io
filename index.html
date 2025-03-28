@@ -567,17 +567,9 @@
                         
                         // Scale the model
                         const size = box.getSize(new THREE.Vector3()).length();
-                        const targetSize = 2.5;
+                        const targetSize = 5;
                         const scale = targetSize / size;
                         head.scale.set(scale, scale, scale);
-                        
-                        // Make model semi-transparent
-                        head.traverse((child) => {
-                            if (child.isMesh) {
-                                child.material.transparent = true;
-                                child.material.opacity = 0.7;
-                            }
-                        });
                         
                         scene.add(head);
                         
@@ -607,7 +599,7 @@
                     
                     if (head) {
                         // Rotate only around Y axis (vertical axis)
-                        head.rotation.y += 0.01;
+                        head.rotation.y += 0.001;
                     }
                     
                     renderer.render(scene, camera);
