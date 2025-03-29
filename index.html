@@ -231,7 +231,7 @@
             line-height: 1.6;
         }
 
-        /* Prizes Section Styles */
+        /* Updated Prizes Section Styles */
         .prize-container {
             margin-bottom: 80px;
         }
@@ -252,68 +252,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         .prize-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-        }
-        
-        .play-button-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-        
-        .play-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #00a2ff, #0066ff);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .play-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8);
-        }
-        
-        .play-icon {
-            width: 24px;
-            height: 24px;
-            fill: white;
-            margin-left: 4px;
-        }
-        
-        .glow-effect {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(0, 170, 255, 0.4) 0%, rgba(0, 170, 255, 0) 70%);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            object-fit: contain;
+            border-radius: 8px;
         }
         
         .prize-info {
             padding: 30px;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         
         .prize-info h3 {
@@ -331,7 +285,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-top: auto;
+            margin-bottom: 30px;
         }
         
         .prize-details h4 {
@@ -343,6 +297,60 @@
         .prize-details p {
             margin-bottom: 8px;
             line-height: 1.5;
+        }
+        
+        .prize-action {
+            margin-top: auto;
+            text-align: center;
+        }
+        
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00a2ff, #0066ff);
+            border-radius: 30px;
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            gap: 8px;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8);
+        }
+        
+        .play-button span {
+            font-size: 1rem;
+        }
+        
+        .play-icon {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+        
+        .glow-effect {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            width: 100px;
+            height: 40px;
+            background: radial-gradient(ellipse at center, rgba(0, 170, 255, 0.4) 0%, rgba(0, 170, 255, 0) 70%);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, 50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, 50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translate(-50%, 50%) scale(1); opacity: 0.7; }
         }
         
         @media (max-width: 768px) {
@@ -548,6 +556,7 @@
             </div>
         </section>
 
+        <!-- Updated Prizes Section -->
         <section id="prizes">
             <h2 class="section-title">Prizes I've Won</h2>
             
@@ -555,14 +564,6 @@
                 <div class="prize-card">
                     <div class="prize-media">
                         <img src="Only One Rule.png" alt="Unite 2024 Trophy" class="prize-image">
-                        <div class="play-button-container">
-                            <a href="https://www.roblox.com/games/86599074896460/ONLY-ONE-RULE-Unite-2024-Winner" target="_blank" class="play-button">
-                                <svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
-                                    <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
-                                </svg>
-                            </a>
-                            <div class="glow-effect"></div>
-                        </div>
                     </div>
                     <div class="prize-info">
                         <h3>Unite 2024 Developer Challenge - 1st Place</h3>
@@ -581,6 +582,16 @@
                                 <p>Exclusive Developer Badge</p>
                                 <p>DevRel Prize "Crown of Knowledge"</p>
                             </div>
+                        </div>
+                        
+                        <div class="prize-action">
+                            <a href="https://www.roblox.com/games/86599074896460/ONLY-ONE-RULE-Unite-2024-Winner" target="_blank" class="play-button">
+                                <span>View on Roblox →</span>
+                                <svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
+                                    <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                                </svg>
+                            </a>
+                            <div class="glow-effect"></div>
                         </div>
                     </div>
                 </div>
