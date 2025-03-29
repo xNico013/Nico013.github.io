@@ -230,6 +230,134 @@
             margin-bottom: 15px;
             line-height: 1.6;
         }
+
+        /* Prizes Section Styles */
+        .prize-container {
+            margin-bottom: 80px;
+        }
+        
+        .prize-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .prize-media {
+            position: relative;
+            height: 400px;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .prize-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        
+        .play-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00a2ff, #0066ff);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8);
+        }
+        
+        .play-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            margin-left: 4px;
+        }
+        
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(0, 170, 255, 0.4) 0%, rgba(0, 170, 255, 0) 70%);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+        
+        .prize-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .prize-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--highlight);
+        }
+        
+        .prize-game {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .prize-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: auto;
+        }
+        
+        .prize-details h4 {
+            color: var(--highlight);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .prize-details p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .prize-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .prize-media {
+                height: 250px;
+            }
+            
+            .prize-details {
+                grid-template-columns: 1fr;
+            }
+        }
         
         .studios {
             margin-bottom: 80px;
@@ -416,6 +544,45 @@
                     <p>I've been scripting in Lua for Roblox since 2018, expanding my skills to C# and C++ in 2022. Over the years, I've developed a deep understanding of game systems, optimization techniques, and clean, maintainable code architecture.</p>
                     <p>My focus is on creating systems that are not just functional, but scalable and efficient. I take pride in writing code that other developers can easily understand and build upon.</p>
                     <p>When I'm not scripting, I enjoy studying new programming paradigms, contributing to open-source projects, and mentoring aspiring developers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="prizes">
+            <h2 class="section-title">Prizes I've Won</h2>
+            
+            <div class="prize-container">
+                <div class="prize-card">
+                    <div class="prize-media">
+                        <img src="https://via.placeholder.com/600x400/3a3a3a/e0e0e0?text=Unite+2024+Trophy" alt="Unite 2024 Trophy" class="prize-image">
+                        <div class="play-button-container">
+                            <a href="https://www.roblox.com/games/86599074896460/ONLY-ONE-RULE-Unite-2024-Winner" target="_blank" class="play-button">
+                                <svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
+                                    <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                                </svg>
+                            </a>
+                            <div class="glow-effect"></div>
+                        </div>
+                    </div>
+                    <div class="prize-info">
+                        <h3>Unite 2024 Developer Challenge - 1st Place</h3>
+                        <p class="prize-game">Winning Game: <span class="highlight">"Only One Rule"</span></p>
+                        <p>My team and I won 1st place in the global Unite 2024 Developer Challenge against competitors from around the world. This prestigious competition tested our skills in game design, innovation, and execution under tight deadlines.</p>
+                        
+                        <div class="prize-details">
+                            <div class="prize-award">
+                                <h4>Award</h4>
+                                <p>Unite 2024 Winner Trophy</p>
+                                <p>Featured on Roblox Official Channels</p>
+                            </div>
+                            <div class="prize-rewards">
+                                <h4>Rewards</h4>
+                                <p>$10,000 Prize Pool</p>
+                                <p>Exclusive Developer Badges</p>
+                                <p>Promotion on Roblox Platform</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
