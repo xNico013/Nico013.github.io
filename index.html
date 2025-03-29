@@ -242,32 +242,34 @@
             overflow: hidden;
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
             gap: 30px;
+            position: relative;
+            padding-bottom: 60px; /* Space for button */
         }
         
         .prize-media {
             position: relative;
             height: 400px;
-            background-color: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-            overflow: hidden;
+            padding: 20px;
         }
         
         .prize-image {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             border-radius: 8px;
+            width: auto;
+            height: auto;
         }
         
         .prize-info {
-            padding: 30px;
+            padding: 30px 30px 0 0;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
         
         .prize-info h3 {
@@ -300,8 +302,13 @@
         }
         
         .prize-action {
-            margin-top: auto;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 60px);
             text-align: center;
+            grid-column: 1 / -1;
         }
         
         .play-button {
@@ -320,7 +327,7 @@
         }
         
         .play-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateX(-50%);
             box-shadow: 0 0 30px rgba(0, 170, 255, 0.8);
         }
         
@@ -338,7 +345,7 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translate(-50%, 50%);
+            transform: translateX(-50%);
             width: 100px;
             height: 40px;
             background: radial-gradient(ellipse at center, rgba(0, 170, 255, 0.4) 0%, rgba(0, 170, 255, 0) 70%);
@@ -348,22 +355,34 @@
         }
         
         @keyframes pulse {
-            0% { transform: translate(-50%, 50%) scale(1); opacity: 0.7; }
-            50% { transform: translate(-50%, 50%) scale(1.2); opacity: 0.4; }
-            100% { transform: translate(-50%, 50%) scale(1); opacity: 0.7; }
+            0% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
         }
         
         @media (max-width: 768px) {
             .prize-card {
                 grid-template-columns: 1fr;
+                padding-bottom: 80px;
             }
             
             .prize-media {
-                height: 250px;
+                height: auto;
+                aspect-ratio: 16/9;
+                padding: 15px;
+            }
+            
+            .prize-info {
+                padding: 0 20px;
             }
             
             .prize-details {
                 grid-template-columns: 1fr;
+            }
+            
+            .prize-action {
+                bottom: 20px;
+                width: calc(100% - 40px);
             }
         }
         
@@ -583,16 +602,16 @@
                                 <p>DevRel Prize "Crown of Knowledge"</p>
                             </div>
                         </div>
-                        
-                        <div class="prize-action">
-                            <a href="https://www.roblox.com/games/86599074896460/ONLY-ONE-RULE-Unite-2024-Winner" target="_blank" class="play-button">
-                                <span>View on Roblox →</span>
-                                <svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
-                                    <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
-                                </svg>
-                            </a>
-                            <div class="glow-effect"></div>
-                        </div>
+                    </div>
+                    
+                    <div class="prize-action">
+                        <a href="https://www.roblox.com/games/86599074896460/ONLY-ONE-RULE-Unite-2024-Winner" target="_blank" class="play-button">
+                            <span>View on Roblox →</span>
+                            <svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
+                                <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                            </svg>
+                        </a>
+                        <div class="glow-effect"></div>
                     </div>
                 </div>
             </div>
