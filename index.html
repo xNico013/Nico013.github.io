@@ -249,9 +249,48 @@
             min-width: 250px;
         }
         
-        .studio-item h3 {
+        .studio-image-container {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .studio-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .studio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .studio-overlay h3 {
             color: var(--highlight);
-            margin-bottom: 10px;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .studio-image-container:hover .studio-overlay {
+            opacity: 1;
+        }
+        
+        .studio-image-container:hover .studio-image {
+            transform: scale(1.05);
         }
         
         footer {
@@ -460,11 +499,21 @@
             
             <div class="studio-list">
                 <div class="studio-item">
-                    <h3>BlockGame Development</h3>
+                    <div class="studio-image-container">
+                        <img src="Blockgame.png" alt="BlockGame Development" class="studio-image">
+                        <div class="studio-overlay">
+                            <h3>BlockGame Development</h3>
+                        </div>
+                    </div>
                     <p>Developed core game systems including progression, leaderboards, and special events for various experiences.</p>
                 </div>
                 <div class="studio-item">
-                    <h3>Premium Platforming</h3>
+                    <div class="studio-image-container">
+                        <img src="Premium Platforming.png" alt="Premium Platforming" class="studio-image">
+                        <div class="studio-overlay">
+                            <h3>Premium Platforming</h3>
+                        </div>
+                    </div>
                     <p>Created custom movement systems, checkpoint mechanics, and interactive environment elements.</p>
                 </div>
             </div>
