@@ -1241,9 +1241,13 @@
                 container.appendChild(dot);
             }
 
-
-
-            
+            // Create connection lines
+            for (let i = 0; i < dotCount * maxConnections; i++) {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                container.appendChild(line);
+                connectionLines.push(line);
+            }
 
             // Animation loop
             const animateDots = () => {
@@ -1279,6 +1283,81 @@
                     dot.element.style.top = `${dot.y}%`;
                 });
 
+                // Create connections between nearby dots
+                let lineIndex = 0;
+                for (let i = 0; i < dots.length; i++) {
+                    const dot1 = dots[i];
+                    
+                    // Find nearest dots
+                    const nearbyDots = [];
+                    for (let j = 0; j < dots.length; j++) {
+                        if (i === j) continue;
+                        
+                        const dot2 = dots[j];
+                        const dx = dot1.x - dot2.x;
+                        const dy = dot1.y - dot2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < connectionDistance) {
+                            nearbyDots.push({ dot: dot2, distance });
+                        }
+                    }
+                    
+                    // Sort by distance and connect to closest dots first
+                    nearbyDots.sort((a, b) => a.distance - b.distance);
+                    
+                    for (let k = 0; k < nearbyDots.length && dot1.connections < maxConnections && nearbyDots[k].dot.connections < maxConnections; k++) {
+                        const dot2 = nearbyDots[k].dot;
+                        const distance = nearbyDots[k].distance;
+                        
+                        if (lineIndex >= connectionLines.length) break;
+                        
+                        const line = connectionLines[lineIndex];
+                        const dx = dot1.x - dot2.x;
+                        const dy = dot1.y - dot2.y;
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        const length = distance * window.innerWidth / 100;
+                        
+                        line.style.width = `${length}px`;
+                        line.style.left = `${dot1.x}%`;
+                        line.style.top = `${dot1.y}%`;
+                        line.style.transform = `rotate(${angle}deg)`;
+                        
+                        // Dynamic opacity based on distance
+                        const opacity = 0.6 * (1 - distance / connectionDistance);
+                        line.style.opacity = opacity;
+                        
+                        // Highlight active connections
+                        if (distance < connectionDistance * 0.7) {
+                            line.classList.add('active');
+                        } else {
+                            line.classList.remove('active');
+                        }
+                        
+                        dot1.connections++;
+                        dot2.connections++;
+                        lineIndex++;
+                    }
+                }
+                
+                // Hide unused lines
+                for (let i = lineIndex; i < connectionLines.length; i++) {
+                    connectionLines[i].style.opacity = '0';
+                }
+
+                requestAnimationFrame(animateDots);
+            };
+
+            // Handle window resize
+            const handleResize = () => {
+                // Recalculate positions if needed
+            };
+
+            window.addEventListener('resize', handleResize);
+            animateDots();
+        };
+
+        
 
         // 3D Head Model Implementation
         const initHeadModel = () => {
