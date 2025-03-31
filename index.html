@@ -1336,9 +1336,6 @@
                 });
                 requestAnimationFrame(animateParticles);
             }
-        
-            initParticles();
-            animateParticles();
 
 
 
@@ -1417,8 +1414,8 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             initParticles();
+            animateParticles();
             initHeadModel();
-            initDotNetwork();
             initStudioCarousel();
             initActiveTab();
         });
