@@ -29,14 +29,6 @@
             padding-top: 120px; /* Added for fixed header */
         }
         
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-color: var(--primary);
-        }
-        
         .head-container {
             position: fixed;
             top: 50%;
@@ -774,42 +766,6 @@
             .studio-item.right {
                 left: 80%;
             }
-        }
-
-        /* Modern Web Dot Network Styles */
-        .dot-network {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        
-        .dot {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background-color: rgba(100, 200, 255, 0.8);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px 2px rgba(100, 200, 255, 0.3);
-            transition: transform 0.2s ease-out;
-        }
-        
-        .connection-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(100, 200, 255, 0.3), transparent);
-            transform-origin: left center;
-            z-index: -1;
-            transition: opacity 0.3s ease;
-        }
-
-        .connection-line.active {
-            background: linear-gradient(90deg, rgba(100, 200, 255, 0.6), transparent);
         }
 
         .glow-effect {
