@@ -1242,6 +1242,44 @@
             }
 
 
+
+            
+
+            // Animation loop
+            const animateDots = () => {
+                // Update glow effects
+                glowEffects.forEach((glow, index) => {
+                    if (Math.random() > 0.95) {
+                        glow.style.left = `${Math.random() * 100}%`;
+                        glow.style.top = `${Math.random() * 100}%`;
+                        glow.style.opacity = '0.3';
+                        setTimeout(() => {
+                            glow.style.opacity = '0';
+                        }, 1000);
+                    }
+                });
+
+                // Reset connection counts
+                dots.forEach(dot => dot.connections = 0);
+
+                // Update dot positions
+                dots.forEach(dot => {
+                    dot.x += dot.speedX;
+                    dot.y += dot.speedY;
+                    
+                    // Bounce off edges with slight randomness
+                    if (dot.x < 5 || dot.x > 95) {
+                        dot.speedX *= -1 * (0.9 + Math.random() * 0.2);
+                    }
+                    if (dot.y < 5 || dot.y > 95) {
+                        dot.speedY *= -1 * (0.9 + Math.random() * 0.2);
+                    }
+                    
+                    dot.element.style.left = `${dot.x}%`;
+                    dot.element.style.top = `${dot.y}%`;
+                });
+
+
         // 3D Head Model Implementation
         const initHeadModel = () => {
             const container = document.getElementById('headModel');
