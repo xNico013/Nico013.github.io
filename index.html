@@ -26,7 +26,7 @@
             color: var(--text);
             overflow-x: hidden;
             position: relative;
-            padding-top: 120px; /* Added for fixed header */
+            padding-top: 120px;
         }
         
         .head-container {
@@ -44,6 +44,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
         
         header {
@@ -52,7 +53,7 @@
             justify-content: flex-start;
             align-items: center;
             border-bottom: 1px solid var(--accent);
-            position: fixed; /* Changed to fixed */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -269,7 +270,7 @@
             grid-template-rows: auto auto;
             gap: 30px;
             position: relative;
-            padding-bottom: 60px; /* Space for button */
+            padding-bottom: 60px;
         }
         
         .prize-media {
@@ -433,8 +434,8 @@
             background-color: var(--secondary);
             padding: 20px;
             border-radius: 10px;
-            width: 500px; /* Increased width */
-            height: 350px; /* Increased height */
+            width: 500px;
+            height: 350px;
             position: absolute;
             transition: all 0.5s ease;
             display: flex;
@@ -443,7 +444,7 @@
         }
         
         .studio-item.left {
-            left: 25%; /* Adjusted position */
+            left: 25%;
             transform: translateX(-50%) scale(0.8);
             opacity: 0.7;
             z-index: 1;
@@ -457,7 +458,7 @@
         }
         
         .studio-item.right {
-            left: 75%; /* Adjusted position */
+            left: 75%;
             transform: translateX(-50%) scale(0.8);
             opacity: 0.7;
             z-index: 1;
@@ -470,7 +471,7 @@
         .studio-image-container {
             position: relative;
             width: 100%;
-            height: 250px; /* Increased height */
+            height: 250px;
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 15px;
@@ -521,7 +522,7 @@
             justify-content: space-between;
             transform: translateY(-50%);
             z-index: 3;
-            padding: 0 20px; /* Added padding to bring buttons closer */
+            padding: 0 20px;
         }
         
         .carousel-button {
@@ -544,29 +545,34 @@
             transform: scale(1.1);
         }
         
-        
-        /* Contact Container */
+        /* Fixed Contact Container */
         .contact-container {
             position: relative;
             margin-bottom: 100px;
+            width: 100%;
         }
     
-        /* Contact Box */
+        /* Fixed Contact Box */
         .contact-box {
             background-color: var(--secondary);
             border-radius: 10px;
-            padding: 80px;
+            padding: 60px;
             position: relative;
-            overflow: visible;
+            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             min-height: 200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     
-        /* Contact Content */
+        /* Fixed Contact Content */
         .contact-content {
             position: relative;
             z-index: 2;
             max-width: 60%;
+            flex: 1;
+            padding-right: 20px;
         }
     
         .contact-text h3 {
@@ -598,6 +604,7 @@
             text-decoration: none;
             color: white;
             transition: transform 0.2s;
+            white-space: nowrap;
         }
     
         .contact-button:hover {
@@ -618,13 +625,14 @@
             background: linear-gradient(135deg, #2c2f33, #23272a);
         }
     
-        /* Character Image */
+        /* Fixed Character Image */
         .character-image {
-            position: absolute;
-            right: 10%;
-            bottom: 0;
-            height: 120%;
-            z-index: 1;
+            position: relative;
+            height: 300px;
+            width: auto;
+            flex-shrink: 0;
+            align-self: flex-end;
+            margin-left: 20px;
         }
     
         .character-image img {
@@ -632,19 +640,20 @@
             width: auto;
             object-fit: contain;
             object-position: bottom right;
-            transform: translateY(13%);
         }
     
         /* Mobile Responsiveness */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .contact-box {
-                padding: 30px;
-                padding-bottom: 120px;
+                padding: 40px;
+                flex-direction: column;
+                text-align: center;
             }
             
             .contact-content {
                 max-width: 100%;
-                text-align: center;
+                padding-right: 0;
+                margin-bottom: 30px;
             }
             
             .contact-buttons {
@@ -652,20 +661,28 @@
             }
             
             .character-image {
-                right: 50%;
-                transform: translateX(50%);
-                height: auto;
-                width: 60%;
-            }
-            
-            .character-image img {
-                width: 100%;
-                height: auto;
-                transform: translateY(20%);
+                height: 200px;
+                margin-left: 0;
+                margin-top: 20px;
+                align-self: center;
             }
         }
         
-        /* Footer */
+        @media (max-width: 768px) {
+            .contact-box {
+                padding: 30px;
+                padding-bottom: 120px;
+            }
+            
+            .character-image {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                height: 150px;
+            }
+        }
+        
+        /* Fixed Footer */
         footer {
             background-color: var(--secondary);
             padding: 30px 0;
@@ -680,15 +697,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
         
         .copyright {
             font-size: 0.9rem;
+            flex: 1;
+            text-align: left;
         }
         
         .footer-contacts {
             display: flex;
             gap: 15px;
+            justify-content: flex-end;
+            flex: 1;
         }
         
         .footer-contact-button {
@@ -710,7 +732,7 @@
         }
         
         .footer-roblox {
-            background: #2c2f33; /* Changed to Roblox's dark color */
+            background: #2c2f33;
         }
         
         .footer-contact-button img {
@@ -731,20 +753,18 @@
                 font-size: 2.5rem;
             }
             
-            .contact-box {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .contact-buttons {
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-            }
-            
             .footer-content {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
+            }
+            
+            .copyright {
+                text-align: center;
+            }
+            
+            .footer-contacts {
+                justify-content: center;
             }
             
             .studio-item {
@@ -823,7 +843,6 @@
             </div>
         </section>
 
-
         <!-- Updated Prizes Section -->
         <section id="prizes">
             <h2 class="section-title">Prizes I've Won</h2>
@@ -866,7 +885,6 @@
                 </div>
             </div>
         </section>
-
         
         <section id="projects">
             <h2 class="section-title">Featured Projects</h2>
@@ -1044,10 +1062,8 @@
                 </div>
             </div>
         </section>
-
         
-
-        
+        <!-- Fixed Contact Container -->
         <div class="contact-container">
             <div class="contact-box">
                 <div class="contact-content">
@@ -1067,13 +1083,11 @@
                     </div>
                 </div>
                 
-                <!-- Character Image - Positioned absolutely -->
                 <div class="character-image">
                     <img src="Pose_ClimingInFrame.png" alt="Climbing Character">
                 </div>
             </div>
         </div>
-        
         
         <!-- Updated Studios Section with Carousel -->
         <section id="studios" class="studios">
@@ -1118,6 +1132,7 @@
         </section>
     </div>
     
+    <!-- Fixed Footer -->
     <footer>
         <div class="footer-content">
             <div class="copyright">
@@ -1139,7 +1154,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script>
-
         // 3D Head Model Implementation
         const initHeadModel = () => {
             const container = document.getElementById('headModel');
@@ -1196,7 +1210,7 @@
                     
                     // Scale the model (bigger than before)
                     const size = box.getSize(new THREE.Vector3()).length();
-                    const targetSize = 3.5; // Increased from 2.5
+                    const targetSize = 3.5;
                     const scale = targetSize / size;
                     head.scale.set(scale, scale, scale);
 
@@ -1261,77 +1275,74 @@
             animate();
         };
 
-
-            const canvas = document.createElement("canvas");
-            document.body.appendChild(canvas);
-            const ctx = canvas.getContext("2d");
+        const canvas = document.createElement("canvas");
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+    
+        canvas.style.position = "fixed";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+        canvas.style.width = "100vw";
+        canvas.style.height = "100vh";
+        canvas.style.pointerEvents = "none";
+        canvas.style.zIndex = "-1";
         
-            canvas.style.position = "fixed";
-            canvas.style.top = "0";
-            canvas.style.left = "0";
-            canvas.style.width = "100vw";
-            canvas.style.height = "100vh";
-            canvas.style.pointerEvents = "none";
-            canvas.style.zIndex = "-1";
-            
-            let particles = [];
-            const numParticles = 80;
-        
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        let particles = [];
+        const numParticles = 80;
+    
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+    
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+    
+        class Particle {
+            constructor() {
+                this.reset();
             }
-        
-            window.addEventListener("resize", resizeCanvas);
-            resizeCanvas();
-        
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-        
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 3 + 1;
-                    this.speedX = (Math.random() - 0.5) * 1;
-                    this.speedY = (Math.random() - 0.5) * 1;
-                    this.opacity = Math.random() * 0.5 + 0.2;
-                }
-        
-                move() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-        
-                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-                }
-        
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(200, 200, 200, ${this.opacity})`;
-                    ctx.fill();
-                }
+    
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.speedY = (Math.random() - 0.5) * 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
             }
-        
-            function initParticles() {
-                particles = [];
-                for (let i = 0; i < numParticles; i++) {
-                    particles.push(new Particle());
-                }
+    
+            move() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+    
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
-        
-            function animateParticles() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach((particle) => {
-                    particle.move();
-                    particle.draw();
-                });
-                requestAnimationFrame(animateParticles);
+    
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 200, 200, ${this.opacity})`;
+                ctx.fill();
             }
-
-
+        }
+    
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+    
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((particle) => {
+                particle.move();
+                particle.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
 
         // Studio Carousel Functionality
         const initStudioCarousel = () => {
@@ -1341,7 +1352,7 @@
             const items = Array.from(document.querySelectorAll('.studio-item'));
             if (items.length < 3) return;
 
-            let currentIndex = 1; // Center item is the active one
+            let currentIndex = 1;
 
             const updateCarousel = () => {
                 items.forEach((item, index) => {
@@ -1372,7 +1383,6 @@
             document.querySelector('.carousel-button.next').addEventListener('click', nextSlide);
             document.querySelector('.carousel-button.prev').addEventListener('click', prevSlide);
 
-            // Initialize
             updateCarousel();
         };
 
@@ -1402,7 +1412,7 @@
             };
             
             window.addEventListener('scroll', updateActiveTab);
-            updateActiveTab(); // Initialize
+            updateActiveTab();
         };
 
         // Initialize when DOM is loaded
