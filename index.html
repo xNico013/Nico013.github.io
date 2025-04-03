@@ -109,20 +109,15 @@
         
         .hero {
             padding: 100px 0;
-            text-align: left;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--highlight);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
+        .hero-content {
             max-width: 600px;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            z-index: 2;
         }
         
         .highlight {
@@ -786,7 +781,6 @@
     <!-- Background Elements -->
     <div id="particles-js"></div>
     <div class="dot-network" id="dotNetwork"></div>
-    <div class="head-container" id="headModel"></div>
     
     <div class="container">
         <header>
@@ -812,6 +806,9 @@
                 <div class="skill-chip">Game Systems</div>
                 <div class="skill-chip">Optimization</div>
             </div>
+
+            <!-- This will be positioned by the head-container CSS -->
+            <div class="head-container" id="headModel"></div>
         </section>
         
         <section id="about">
