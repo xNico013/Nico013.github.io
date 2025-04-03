@@ -544,26 +544,30 @@
             transform: scale(1.1);
         }
         
-        /* Contact Box Styles */
+        /* Container that establishes positioning context */
+        .contact-container {
+            position: relative;
+            margin-bottom: 80px;
+        }
+    
+        /* Original contact box - now with fixed height */
         .contact-box {
             background-color: var(--secondary);
             border-radius: 10px;
             padding: 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: flex-end; /* Align items to bottom */
+            grid-template-columns: 1fr;
             position: relative;
-            margin-bottom: 80px;
-            overflow: visible; /* Allow image to overflow */
+            z-index: 1;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            min-height: 250px; /* Fixed minimum height */
         }
     
         .contact-text {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            z-index: 2;
+            max-width: 500px;
         }
     
         .contact-text h3 {
@@ -607,62 +611,56 @@
             box-shadow: 0 0 20px rgba(44, 47, 51, 0.5);
         }
     
-        .contact-button:hover {
-            transform: scale(1.05);
-        }
-    
-        .contact-button img {
-            width: 24px;
-            height: 24px;
-        }
-    
-        /* Character Image Styles */
-        .character-image-container {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
+        /* Character positioning - now absolutely positioned */
+        .character-image-wrapper {
+            position: absolute;
+            right: 30px;
+            bottom: 0;
+            height: 120%;
+            z-index: 2;
+            pointer-events: none;
         }
     
         .climbing-character {
-            height: 120%;
+            height: 100%;
             width: auto;
-            max-width: 100%;
+            max-width: 300px;
             object-fit: contain;
             object-position: bottom right;
-            transform: translateY(15%);
+            transform: translateY(20%);
             filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
         }
     
-        /* Mobile Responsiveness */
+        /* Mobile responsiveness */
         @media (max-width: 768px) {
             .contact-box {
-                grid-template-columns: 1fr;
-                padding-bottom: 100px; /* Extra space for character */
+                padding: 30px;
+                min-height: auto;
+                padding-bottom: 120px; /* Make space for character */
             }
-    
-            .contact-text {
-                text-align: center;
-            }
-    
-            .contact-buttons {
-                justify-content: center;
-            }
-    
-            .character-image-container {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                width: 100%;
-                justify-content: center;
-            }
-    
-            .climbing-character {
+            
+            .character-image-wrapper {
+                right: 50%;
+                transform: translateX(50%);
                 height: auto;
                 width: 60%;
-                max-height: 200px;
-                transform: translateY(20%);
+                bottom: 20px;
+            }
+            
+            .climbing-character {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+                transform: none;
+            }
+            
+            .contact-text {
+                text-align: center;
+                max-width: 100%;
+            }
+            
+            .contact-buttons {
+                justify-content: center;
             }
         }
         
@@ -1050,28 +1048,29 @@
 
         
         <!-- Contact Box -->
-        <section class="contact-box">
-            <div class="contact-text">
-                <h3>Want to improve your game?</h3>
-                <h2>Contact me right now!</h2>
-                <div class="contact-buttons">
-                    <a href="#" class="contact-button discord-button">
-                        <img src="discord-icon.png" alt="Discord">
-                        <span>Discord</span>
-                    </a>
-                    <a href="#" class="contact-button roblox-button">
-                        <img src="roblox-icon.png" alt="Roblox">
-                        <span>Roblox</span>
-                    </a>
+        <div class="contact-container">
+            <div class="contact-box">
+                <div class="contact-text">
+                    <h3>Want to improve your game?</h3>
+                    <h2>Contact me right now!</h2>
+                    <div class="contact-buttons">
+                        <a href="#" class="contact-button discord-button">
+                            <img src="discord-icon.png" alt="Discord">
+                            <span>Discord</span>
+                        </a>
+                        <a href="#" class="contact-button roblox-button">
+                            <img src="roblox-icon.png" alt="Roblox">
+                            <span>Roblox</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             
-            <!-- Character Image Container -->
-            <div class="character-image-container">
+            <!-- Character Image - Positioned absolutely relative to container -->
+            <div class="character-image-wrapper">
                 <img src="Pose_ClimingInFrame.png" alt="Climbing Character" class="climbing-character">
             </div>
-        </section>
-
+        </div>
         
         
         <!-- Updated Studios Section with Carousel -->
