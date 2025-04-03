@@ -555,7 +555,7 @@
             align-items: center;
             margin-bottom: 80px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
@@ -632,16 +632,21 @@
         }
         
         .contact-image {
-            height: 300px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 120%; /* Make it taller than the box */
             display: flex;
             align-items: flex-end;
-            justify-content: center;
+            justify-content: flex-end; /* Align to the right */
         }
         
         .contact-image img {
             max-height: 100%;
-            max-width: 100%;
+            width: auto; /* Maintain aspect ratio */
             object-fit: contain;
+            transform: translate(20px, 20px); /* Adjust as needed to position perfectly */
+            filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
         }
         
         /* Footer */
@@ -1027,7 +1032,7 @@
         
 
         
-        <!-- Contact Box - Moved above Studios section -->
+        <!-- Contact Box -->
         <section class="contact-box">
             <div class="contact-text">
                 <h3>Want to improve your game?</h3>
