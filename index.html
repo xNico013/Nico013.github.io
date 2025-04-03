@@ -544,46 +544,47 @@
             transform: scale(1.1);
         }
         
-        /* Container that establishes positioning context */
+        
+        /* Contact Container */
         .contact-container {
             position: relative;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
     
-        /* Original contact box - now with fixed height */
+        /* Contact Box */
         .contact-box {
             background-color: var(--secondary);
             border-radius: 10px;
             padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr;
             position: relative;
-            z-index: 1;
+            overflow: visible;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            min-height: 250px; /* Fixed minimum height */
+            min-height: 200px;
         }
     
-        .contact-text {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 500px;
+        /* Contact Content */
+        .contact-content {
+            position: relative;
+            z-index: 2;
+            max-width: 60%;
         }
     
         .contact-text h3 {
             font-size: 1.2rem;
             color: var(--highlight);
+            margin-bottom: 10px;
         }
     
         .contact-text h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--highlight);
             margin-bottom: 20px;
         }
     
+        /* Buttons */
         .contact-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
     
@@ -591,76 +592,77 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 500;
             text-decoration: none;
             color: white;
-            font-weight: 500;
-            gap: 8px;
-            min-width: 150px;
+            transition: transform 0.2s;
+        }
+    
+        .contact-button:hover {
+            transform: scale(1.05);
+        }
+    
+        .button-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
         }
     
         .discord-button {
             background: linear-gradient(135deg, #5865F2, #4752C4);
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
         }
     
         .roblox-button {
             background: linear-gradient(135deg, #2c2f33, #23272a);
-            box-shadow: 0 0 20px rgba(44, 47, 51, 0.5);
         }
     
-        /* Character positioning - now absolutely positioned */
-        .character-image-wrapper {
+        /* Character Image */
+        .character-image {
             position: absolute;
-            right: 30px;
+            right: 20px;
             bottom: 0;
             height: 120%;
-            z-index: 2;
-            pointer-events: none;
+            z-index: 1;
         }
     
-        .climbing-character {
+        .character-image img {
             height: 100%;
             width: auto;
-            max-width: 300px;
+            max-width: 250px;
             object-fit: contain;
             object-position: bottom right;
-            transform: translateY(20%);
-            filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
+            transform: translateY(15%);
         }
     
-        /* Mobile responsiveness */
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .contact-box {
                 padding: 30px;
-                min-height: auto;
-                padding-bottom: 120px; /* Make space for character */
+                padding-bottom: 120px;
             }
             
-            .character-image-wrapper {
-                right: 50%;
-                transform: translateX(50%);
-                height: auto;
-                width: 60%;
-                bottom: 20px;
-            }
-            
-            .climbing-character {
-                width: 100%;
-                height: auto;
+            .contact-content {
                 max-width: 100%;
-                transform: none;
-            }
-            
-            .contact-text {
                 text-align: center;
-                max-width: 100%;
             }
             
             .contact-buttons {
                 justify-content: center;
+            }
+            
+            .character-image {
+                right: 50%;
+                transform: translateX(50%);
+                height: auto;
+                width: 60%;
+            }
+            
+            .character-image img {
+                width: 100%;
+                height: auto;
+                transform: translateY(20%);
             }
         }
         
@@ -1047,28 +1049,29 @@
         
 
         
-        <!-- Contact Box -->
         <div class="contact-container">
             <div class="contact-box">
-                <div class="contact-text">
-                    <h3>Want to improve your game?</h3>
-                    <h2>Contact me right now!</h2>
-                    <div class="contact-buttons">
-                        <a href="#" class="contact-button discord-button">
-                            <img src="discord-icon.png" alt="Discord">
-                            <span>Discord</span>
-                        </a>
-                        <a href="#" class="contact-button roblox-button">
-                            <img src="roblox-icon.png" alt="Roblox">
-                            <span>Roblox</span>
-                        </a>
+                <div class="contact-content">
+                    <div class="contact-text">
+                        <h3>Want to improve your game?</h3>
+                        <h2>Contact me right now!</h2>
+                        <div class="contact-buttons">
+                            <a href="#" class="contact-button discord-button">
+                                <img src="discord-icon.png" alt="Discord" class="button-icon">
+                                <span>Discord</span>
+                            </a>
+                            <a href="#" class="contact-button roblox-button">
+                                <img src="roblox-icon.png" alt="Roblox" class="button-icon">
+                                <span>Roblox</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Character Image - Positioned absolutely relative to container -->
-            <div class="character-image-wrapper">
-                <img src="Pose_ClimingInFrame.png" alt="Climbing Character" class="climbing-character">
+                
+                <!-- Character Image - Positioned absolutely -->
+                <div class="character-image">
+                    <img src="Pose_ClimingInFrame.png" alt="Climbing Character">
+                </div>
             </div>
         </div>
         
