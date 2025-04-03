@@ -544,127 +544,127 @@
             transform: scale(1.1);
         }
         
-    /* Contact Box Styles */
-    .contact-box {
-        background-color: var(--secondary);
-        border-radius: 10px;
-        padding: 40px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        align-items: flex-end; /* Align items to bottom */
-        position: relative;
-        margin-bottom: 80px;
-        overflow: visible; /* Allow image to overflow */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-text {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        z-index: 2;
-    }
-
-    .contact-text h3 {
-        font-size: 1.2rem;
-        color: var(--highlight);
-    }
-
-    .contact-text h2 {
-        font-size: 2.5rem;
-        color: var(--highlight);
-        margin-bottom: 20px;
-    }
-
-    .contact-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-
-    .contact-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 24px;
-        border-radius: 30px;
-        transition: transform 0.3s, box-shadow 0.3s;
-        text-decoration: none;
-        color: white;
-        font-weight: 500;
-        gap: 8px;
-        min-width: 150px;
-    }
-
-    .discord-button {
-        background: linear-gradient(135deg, #5865F2, #4752C4);
-        box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
-    }
-
-    .roblox-button {
-        background: linear-gradient(135deg, #2c2f33, #23272a);
-        box-shadow: 0 0 20px rgba(44, 47, 51, 0.5);
-    }
-
-    .contact-button:hover {
-        transform: scale(1.05);
-    }
-
-    .contact-button img {
-        width: 24px;
-        height: 24px;
-    }
-
-    /* Character Image Styles */
-    .character-image-container {
-        position: relative;
-        height: 100%;
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
-    }
-
-    .climbing-character {
-        height: 120%;
-        width: auto;
-        max-width: 100%;
-        object-fit: contain;
-        object-position: bottom right;
-        transform: translateY(15%);
-        filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
-    }
-
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
+        /* Contact Box Styles */
         .contact-box {
-            grid-template-columns: 1fr;
-            padding-bottom: 100px; /* Extra space for character */
+            background-color: var(--secondary);
+            border-radius: 10px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: flex-end; /* Align items to bottom */
+            position: relative;
+            margin-bottom: 80px;
+            overflow: visible; /* Allow image to overflow */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-
+    
         .contact-text {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 2;
         }
-
+    
+        .contact-text h3 {
+            font-size: 1.2rem;
+            color: var(--highlight);
+        }
+    
+        .contact-text h2 {
+            font-size: 2.5rem;
+            color: var(--highlight);
+            margin-bottom: 20px;
+        }
+    
         .contact-buttons {
-            justify-content: center;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-
+    
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            gap: 8px;
+            min-width: 150px;
+        }
+    
+        .discord-button {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
+        }
+    
+        .roblox-button {
+            background: linear-gradient(135deg, #2c2f33, #23272a);
+            box-shadow: 0 0 20px rgba(44, 47, 51, 0.5);
+        }
+    
+        .contact-button:hover {
+            transform: scale(1.05);
+        }
+    
+        .contact-button img {
+            width: 24px;
+            height: 24px;
+        }
+    
+        /* Character Image Styles */
         .character-image-container {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            justify-content: center;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
         }
-
+    
         .climbing-character {
-            height: auto;
-            width: 60%;
-            max-height: 200px;
-            transform: translateY(20%);
+            height: 120%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: bottom right;
+            transform: translateY(15%);
+            filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
         }
-    }
+    
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .contact-box {
+                grid-template-columns: 1fr;
+                padding-bottom: 100px; /* Extra space for character */
+            }
+    
+            .contact-text {
+                text-align: center;
+            }
+    
+            .contact-buttons {
+                justify-content: center;
+            }
+    
+            .character-image-container {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                justify-content: center;
+            }
+    
+            .climbing-character {
+                height: auto;
+                width: 60%;
+                max-height: 200px;
+                transform: translateY(20%);
+            }
+        }
         
         /* Footer */
         footer {
