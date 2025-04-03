@@ -544,26 +544,27 @@
             transform: scale(1.1);
         }
         
-        /* Updated Contact Box */
-        .contact-box {
-            background-color: var(--secondary);
-            border-radius: 10px;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            margin-bottom: 80px;
-            position: relative;
-            overflow: visible;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+            /* Updated Contact Box with Climbing Character */
+            .contact-box {
+                background-color: var(--secondary);
+                border-radius: 10px;
+                padding: 40px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+                align-items: center;
+                margin-bottom: 80px;
+                position: relative;
+                overflow: hidden; /* Keep this hidden to contain the box shadow */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
         
-        .contact-text {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+            .contact-text {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                z-index: 2; /* Ensure text stays above image */
+            }
         
         .contact-text h3 {
             font-size: 1.2rem;
@@ -630,6 +631,21 @@
         .contact-button span {
             font-size: 1rem;
         }
+
+
+        /* New climbing character container */
+        .climbing-character-container {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            height: 120%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            z-index: 1;
+            pointer-events: none; /* Allows clicks to pass through to buttons */
+        }
         
         .contact-image {
             position: absolute;
@@ -641,12 +657,38 @@
             justify-content: flex-end; /* Align to the right */
         }
         
-        .contact-image img {
-            max-height: 100%;
-            width: auto; /* Maintain aspect ratio */
+        .climbing-character {
+            height: 100%;
+            width: auto;
             object-fit: contain;
-            transform: translate(20px, 20px); /* Adjust as needed to position perfectly */
+            object-position: bottom right;
+            transform: translateX(15%) translateY(10%);
             filter: drop-shadow(-5px 5px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .contact-box {
+                grid-template-columns: 1fr;
+                padding-bottom: 40px;
+            }
+            
+            .climbing-character-container {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                position: relative;
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            .climbing-character {
+                transform: none;
+                width: 80%;
+                height: auto;
+                max-height: 200px;
+                object-position: center bottom;
+            }
         }
         
         /* Footer */
@@ -1048,8 +1090,10 @@
                     </a>
                 </div>
             </div>
-            <div class="contact-image">
-                <img src="Pose_ClimingInFrame.png" alt="Roblox Character">
+            
+            <!-- Climbing Character Container -->
+            <div class="climbing-character-container">
+                <img src="Pose_ClimingInFrame.png" alt="Roblox Character" class="climbing-character">
             </div>
         </section>
         
