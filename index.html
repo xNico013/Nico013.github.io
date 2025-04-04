@@ -28,6 +28,17 @@
             position: relative;
         }
         
+        /* Background Dots */
+        #dotNetwork {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
         .head-container {
             width: 500px;
             height: 500px;
@@ -110,6 +121,7 @@
             align-items: center;
             text-align: center;
             margin-bottom: 10%;
+            margin-top: 500px;
         }
         
         .hero-content {
@@ -581,18 +593,21 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 30px;
             font-weight: 500;
             text-decoration: none;
             color: white;
-            transition: transform 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
         }
-    
+        
         .contact-button:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
+            z-index: 2;
         }
-    
+        
         .button-icon {
             width: 20px;
             height: 20px;
@@ -601,10 +616,40 @@
     
         .discord-button {
             background: linear-gradient(135deg, #5865F2, #4752C4);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
+        }
+        
+        .discord-button:hover {
+            box-shadow: 0 0 30px rgba(88, 101, 242, 0.8);
         }
     
         .roblox-button {
             background: linear-gradient(135deg, #2c2f33, #23272a);
+            box-shadow: 0 0 20px rgba(44, 47, 51, 0.5);
+        }
+        
+        .roblox-button:hover {
+            box-shadow: 0 0 30px rgba(44, 47, 51, 0.8);
+        }
+        
+        .contact-button-glow {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 40px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        .discord-glow {
+            background: radial-gradient(ellipse at center, rgba(88, 101, 242, 0.4) 0%, rgba(88, 101, 242, 0) 70%);
+        }
+        
+        .roblox-glow {
+            background: radial-gradient(ellipse at center, rgba(44, 47, 51, 0.4) 0%, rgba(44, 47, 51, 0) 70%);
         }
     
         .character-image {
@@ -693,6 +738,10 @@
                 grid-template-columns: 1fr;
             }
             
+            .about-image {
+                height: 300px;
+            }
+            
             .contact-box {
                 padding: 80px;
                 padding-bottom: 70%;
@@ -753,9 +802,8 @@
     </style>
 </head>
 <body>
-    <!-- Background Elements -->
-    <div id="particles-js"></div>
-    <div class="dot-network" id="dotNetwork"></div>
+    <!-- Background Dots -->
+    <canvas id="dotNetwork"></canvas>
     
     <div class="container">
         <header>
@@ -793,7 +841,7 @@
             
             <div class="about">
                 <div class="about-image">
-                    <img src="Pose_Standing.png" alt="Standing Character">
+                    <img src="Pose_Standing.png" alt="Standing Character" style="object-fit: contain;">
                 </div>
                 <div class="about-text">
                     <h2>Nico013</h2>
@@ -1025,10 +1073,12 @@
                             <a href="#" class="contact-button discord-button">
                                 <img src="discord-icon.png" alt="Discord" class="button-icon">
                                 <span>Discord</span>
+                                <div class="contact-button-glow discord-glow"></div>
                             </a>
                             <a href="#" class="contact-button roblox-button">
                                 <img src="roblox-icon.png" alt="Roblox" class="button-icon">
                                 <span>Roblox</span>
+                                <div class="contact-button-glow roblox-glow"></div>
                             </a>
                         </div>
                     </div>
@@ -1102,6 +1152,85 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
     <script>
+        // Background Dots Animation
+        const initDotNetwork = () => {
+            const canvas = document.getElementById('dotNetwork');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Dot settings
+            const dots = [];
+            const dotCount = 80;
+            const dotRadius = 2;
+            const connectionDistance = 150;
+            
+            // Create dots
+            for (let i = 0; i < dotCount; i++) {
+                dots.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * dotRadius + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+            
+            // Animation loop
+            const animate = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw dots
+                dots.forEach(dot => {
+                    // Move dots
+                    dot.x += dot.vx;
+                    dot.y += dot.vy;
+                    
+                    // Bounce off edges
+                    if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+                    if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+                    
+                    // Draw dot
+                    ctx.beginPath();
+                    ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200, 200, 200, ${dot.opacity})`;
+                    ctx.fill();
+                });
+                
+                // Draw connections
+                for (let i = 0; i < dots.length; i++) {
+                    for (let j = i + 1; j < dots.length; j++) {
+                        const dx = dots[i].x - dots[j].x;
+                        const dy = dots[i].y - dots[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < connectionDistance) {
+                            const opacity = 1 - (distance / connectionDistance);
+                            ctx.strokeStyle = `rgba(200, 200, 200, ${opacity * 0.2})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(dots[i].x, dots[i].y);
+                            ctx.lineTo(dots[j].x, dots[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            };
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+            
+            animate();
+        };
+
         // 3D Head Model Implementation
         const initHeadModel = () => {
             const container = document.getElementById('headModel');
@@ -1290,6 +1419,7 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            initDotNetwork();
             initHeadModel();
             initStudioCarousel();
             initActiveTab();
