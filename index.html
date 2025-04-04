@@ -50,6 +50,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
+            overflow: hidden;
         }
         
         header {
@@ -420,6 +422,8 @@
         .studios {
             margin-bottom: 80px;
             position: relative;
+            width: 100%;
+            overflow: hidden;
         }
         
         .studio-carousel {
@@ -430,6 +434,7 @@
             position: relative;
             height: 400px;
             perspective: 1000px;
+            width: 100%;
         }
         
         .studio-item {
@@ -443,6 +448,8 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            left: 50%;
+            transform: translateX(-50%);
         }
         
         .studio-item.left {
@@ -722,7 +729,6 @@
                 height: 300px;
             }
             
-            
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -730,7 +736,6 @@
             .about {
                 grid-template-columns: 1fr;
             }
-            
             
             .contact-box {
                 padding: 80px;
@@ -775,6 +780,20 @@
             
             .studio-item.right {
                 left: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .studio-item {
+                width: 280px;
+            }
+            
+            .studio-item.left {
+                left: 15%;
+            }
+            
+            .studio-item.right {
+                left: 85%;
             }
         }
 
@@ -1346,19 +1365,24 @@
             let currentIndex = 1; // Center item is the active one
 
             const updateCarousel = () => {
-                items.forEach((item, index) => {
-                    item.classList.remove('left', 'center', 'right', 'hidden');
-                    
-                    if (index === currentIndex - 1) {
-                        item.classList.add('left');
-                    } else if (index === currentIndex) {
-                        item.classList.add('center');
-                    } else if (index === currentIndex + 1) {
-                        item.classList.add('right');
-                    } else {
-                        item.classList.add('hidden');
-                    }
+                // Hide all items first
+                items.forEach(item => {
+                    item.classList.remove('left', 'center', 'right');
+                    item.classList.add('hidden');
                 });
+
+                // Only show the current, previous, and next items
+                const prevIndex = (currentIndex - 1 + items.length) % items.length;
+                const nextIndex = (currentIndex + 1) % items.length;
+                
+                items[prevIndex].classList.remove('hidden');
+                items[prevIndex].classList.add('left');
+                
+                items[currentIndex].classList.remove('hidden');
+                items[currentIndex].classList.add('center');
+                
+                items[nextIndex].classList.remove('hidden');
+                items[nextIndex].classList.add('right');
             };
 
             const nextSlide = () => {
